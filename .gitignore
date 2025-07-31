@@ -23,4 +23,5 @@ Thumbs.db
 src/media/
 
 # Variables d'environnement
-.env
+.env*.rtf
+tree*
