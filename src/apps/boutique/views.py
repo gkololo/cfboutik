@@ -1,3 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from apps.boutique.models import Categorie
 
-# Create your views here.
+
+def panneau_vente(request):
+    liste_categorie = Categorie.objects.all()
+    return render (request, "cfboutik/accueil.html", {"data": liste_categorie})

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block title %}Accueil - Champ Fleuri Boutique {% endblock %}
+
+{% block content %}
+<div class="container">
+   {% for categorie in data %}
+   <li><strong>{{ categorie.nom }}</strong> —</li>
+    {% endfor %}
+
+</div>
+
+{% endblock %}

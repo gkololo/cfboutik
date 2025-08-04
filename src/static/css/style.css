@@ -1,0 +1,28 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  /* Améliore la lisibilité sur mobile */
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  font-size: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+  /* Police plus grande pour mobile */
+  font-size: 18px; /* Augmenté de 15px à 18px */
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+  /* Améliore le rendu des polices sur mobile */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
