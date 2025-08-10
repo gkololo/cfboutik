@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block title %}Accueil - Champ Fleuri Boutique {% endblock %}
+
+{% block content %}
+<div class="container">
+   {% for produit in produits %}
+   <li><strong>** {{ produit.nom }}</strong> **{{ produit.prix_vente }}€</li> <!-- simple liste  -->
+
+
+   {% endfor %}
+</div>
+{% endblock %}

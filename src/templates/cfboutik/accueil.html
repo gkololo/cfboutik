@@ -7,8 +7,11 @@
 {% block content %}
 <div class="container">
    {% for categorie in data %}
-   <li><strong>{{ categorie.nom }}</strong> —</li>
+   <<!-- li><strong>-*- {{ categorie.nom }}</strong> —*- </li> --> <!-- SIMPLE LISTE  -->
+   <li><a href="{% url 'produits' categorie.id %}"><strong>{{ categorie.nom }}</strong></a></li> <!-- liste clicable  -->
+
     {% endfor %}
+
 
 </div>
 

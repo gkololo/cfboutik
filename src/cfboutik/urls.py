@@ -17,9 +17,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from apps.boutique.views import panneau_vente
+from apps.boutique.views import panneau_vente, produits_par_categorie
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", panneau_vente, name="accueil"),  # Page d'accueil
+    path("categorie/<int:categorie_id>/", produits_par_categorie, name="produits")
 ]
