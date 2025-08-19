@@ -9,10 +9,17 @@
     <h2>Détail du Produit</h2>
     <ul>
         <li><strong>Nom :</strong> {{ produit.nom }}</li>
-        <li><strong>Description :</strong> {{ <produit class="description"></produit> }}</li>
+        <li><strong>Description :</strong> {{ produit.description }}</li>
         <li><strong>Prix :</strong> {{produit.prix_vente}}€</li>
-        <li><strong>Stock disponible :</strong> {{ ??? }}</li>
-        <!-- À TOI : ajouter un formulaire simple -->
+        <li><strong>Stock disponible :</strong> {{produit.stock_actuel }}</li>
+
     </ul>
+    <!--  formulaire simple -->
+          <form method="post" action="{% url 'ajouter_panier' produit.id %}">
+            {% csrf_token %}
+            <label>Quantité :</label>
+            <input type="number" name="quantite" value="1" min="1" max="{{ produit.stock_actuel }}">
+            <button type="submit">Ajouter au panier</button>
+        </form>
 </div>
 {% endblock %}
