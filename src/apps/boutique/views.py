@@ -16,11 +16,8 @@ def produit_detail(request, produit_id):
     #  récupérer le produit
     produit = Produit.objects.get(id=produit_id)
     #  retourner le render avec le bon template
-    return render(request, "cfboutik/produits_details.html", {"produits détails": produit})
+    return render(request, "cfboutik/produit_detail.html", {"produit": produit})
 
-from django.shortcuts import render, redirect
-from django.contrib import messages  # ← Ajouter cet import
-from apps.boutique.models import Categorie, Produit
 
 def ajouter_panier(request, produit_id):
     if request.method == 'POST':  # ← D'ABORD vérifier si POST
@@ -32,7 +29,8 @@ def ajouter_panier(request, produit_id):
 
             produit = Produit.objects.get(id=produit_id)
 
-            if quantite > produit.stock_actuel:
+            # Vérifier le stock SEULEMENT si gestion activée
+            if produit.gestion_stock and quantite > produit.stock_actuel:
                 raise ValueError("Stock insuffisant")
 
             # ✅ ICI récupérer le panier (après validation)
@@ -52,11 +50,12 @@ def ajouter_panier(request, produit_id):
 }
 
             request.session['panier'] = panier
-            return redirect('voir_panier')  # ← Plutôt redirect que render
+            return redirect('produits', categorie_id=categorie.id)   #retour à la catégorie pour meilleure UX
 
         except (ValueError, Produit.DoesNotExist):
             messages.error(request, "Erreur dans les données")
             return redirect('produit_detail', produit_id=produit_id)
+
 
     # Si pas POST, rediriger
     return redirect('produits_par_categorie')

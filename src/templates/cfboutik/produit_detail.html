@@ -18,7 +18,14 @@
           <form method="post" action="{% url 'ajouter_panier' produit.id %}">
             {% csrf_token %}
             <label>Quantité :</label>
-            <input type="number" name="quantite" value="1" min="1" max="{{ produit.stock_actuel }}">
+            {% if produit.gestion_stock %}
+                <li><strong>Stock disponible :</strong> {{ produit.stock_actuel }}</li>
+                <input type="number" name="quantite" value="1" min="1" max="{{ produit.stock_actuel }}">
+            {% else %}
+                <li><strong>Stock :</strong> Disponible</li>
+                <input type="number" name="quantite" value="1" min="1">  <!-- Pas de max ! -->
+            {% endif %}
+
             <button type="submit">Ajouter au panier</button>
         </form>
 </div>

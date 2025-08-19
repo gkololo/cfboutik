@@ -7,7 +7,11 @@
 {% block content %}
 <div class="container">
    {% for produit in produits %}
-   <li><strong>** {{ produit.nom }}</strong> **{{ produit.prix_vente }}€</li> <!-- simple liste  -->
+   <li>
+      <a href="{% url 'produit_detail' produit.id %}">  <!-- ← Ajouter le lien ! -->
+        <strong>{{ produit.nom }}</strong>
+    </a>
+      - {{ produit.prix_vente }}€</li> <!-- simple liste  -->
 
 
    {% endfor %}
