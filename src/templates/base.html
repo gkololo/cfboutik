@@ -6,8 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Champ Fleuri Boutique</title>
 </head>
+
 <body>
+    <nav>
+        <a href="{% url 'accueil' %}">🏠 Accueil</a>
+        <a href="{% url 'panier' %}">🛒 Panier</a>
+    </nav>
+
+    <!-- Messages EN DEHORS du block = toujours visibles -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="message-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
     {% block content %}
     {% endblock %}
+
 </body>
 </html>

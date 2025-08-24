@@ -137,5 +137,5 @@ class Detailvente(models.Model):
     )
 
     def sous_total(self):
-    # À TOI : retourne quantite × prix_unitaire
+    #  retourne quantite × prix_unitaire
         return self.quantite * self.prix_unitaire

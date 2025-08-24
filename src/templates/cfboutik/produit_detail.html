@@ -1,8 +1,6 @@
-{% extends "base.html" %}
-{% load static %}
+{% extends "cfboutik/base.html" %}
 
-
-{% block title %}Accueil - Champ Fleuri Boutique {% endblock %}
+{% block title %}{{ produit.nom }} - Champ Fleuri Boutique {% endblock %}
 
 {% block content %}
 <div class="container">
@@ -10,23 +8,40 @@
     <ul>
         <li><strong>Nom :</strong> {{ produit.nom }}</li>
         <li><strong>Description :</strong> {{ produit.description }}</li>
-        <li><strong>Prix :</strong> {{produit.prix_vente}}€</li>
-        <li><strong>Stock disponible :</strong> {{produit.stock_actuel }}</li>
 
+        <!-- Affichage conditionnel du prix -->
+        {% if produit.prix_libre %}
+            <li><strong>Prix :</strong> À définir</li>
+        {% else %}
+            <li><strong>Prix :</strong> {{ produit.prix_vente }}€</li>
+        {% endif %}
+
+        <!-- Stock -->
+        {% if produit.gestion_stock %}
+            <li><strong>Stock disponible :</strong> {{ produit.stock_actuel }}</li>
+        {% else %}
+            <li><strong>Stock :</strong> Disponible</li>
+        {% endif %}
     </ul>
-    <!--  formulaire simple -->
-          <form method="post" action="{% url 'ajouter_panier' produit.id %}">
-            {% csrf_token %}
-            <label>Quantité :</label>
-            {% if produit.gestion_stock %}
-                <li><strong>Stock disponible :</strong> {{ produit.stock_actuel }}</li>
-                <input type="number" name="quantite" value="1" min="1" max="{{ produit.stock_actuel }}">
-            {% else %}
-                <li><strong>Stock :</strong> Disponible</li>
-                <input type="number" name="quantite" value="1" min="1">  <!-- Pas de max ! -->
-            {% endif %}
 
-            <button type="submit">Ajouter au panier</button>
-        </form>
+    <!-- Formulaire -->
+    <form method="post" action="{% url 'ajouter_panier' produit.id %}">
+        {% csrf_token %}
+
+        <label>Quantité :</label>
+        {% if produit.gestion_stock %}
+            <input type="number" name="quantite" value="1" min="1" max="{{ produit.stock_actuel }}">
+        {% else %}
+            <input type="number" name="quantite" value="1" min="1">
+        {% endif %}
+
+        <!-- NOUVEAU : Champ prix si prix libre -->
+        {% if produit.prix_libre %}
+            <br><label>Prix :</label>
+            <input type="number" name="prix" step="0.01" min="0" placeholder="Saisir le prix" required>€
+        {% endif %}
+
+        <button type="submit">Ajouter au panier</button>
+    </form>
 </div>
 {% endblock %}

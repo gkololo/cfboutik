@@ -50,6 +50,8 @@ def ajouter_panier(request, produit_id):
 }
 
             request.session['panier'] = panier
+            messages.success(request, "✅ Article ajouté au panier !")
+
             return redirect('produits', categorie_id=categorie.id)   #retour à la catégorie pour meilleure UX
 
         except (ValueError, Produit.DoesNotExist):
@@ -60,3 +62,12 @@ def ajouter_panier(request, produit_id):
     # Si pas POST, rediriger
     return redirect('produits_par_categorie')
 
+def voir_panier(request):
+    # 1. Récupère le panier de la session (avec une valeur par défaut)
+    panier = request.session.get('panier', {})
+
+       # Enrichir chaque article avec le sous-total
+    for article in panier.values():
+        article['sous_total'] = article['quantite'] * article['prix']
+
+    return render(request, 'cfboutik/panier.html', {'panier': panier})

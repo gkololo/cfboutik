@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block title %}Panier- Champ Fleuri Boutique {% endblock %}
+
+{% block content %}
+<h1>🛒 Votre panier </h1>
+
+{% if not panier %}
+    <p>Votre 🛒 panier est vide</p>
+    <a href="{% url 'accueil' %}">Retour accueil 🏠</a>
+{% else %} <!-- liste des produits du panier -->
+    <table>
+        <tr>
+            <th>Produit</th>
+            <th>Quantité</th>
+            <th>Prix unitaire</th>
+            <th>Sous-total</th>
+        </tr>
+        {% for article in panier.values %} <!--  ← .values pour accéder aux données -->
+            <tr>
+                <td>{{ article.nom_produit }}</td>
+                <td>{{ article.quantite }}</td>
+                <td>{{ article.prix }}€</td>
+                <td>{{ article.prix|floatformat:2 }}€ × {{ article.quantite }} </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+{% endif %}
+{% endblock %}
